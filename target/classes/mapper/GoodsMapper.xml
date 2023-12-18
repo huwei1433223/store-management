@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.store.mapper.GoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.admin.store.pojo.Goods">
+        <id property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="storageId" column="storage_id" jdbcType="INTEGER"/>
+        <result property="goodsTypeId" column="goods_type_id" jdbcType="INTEGER"/>
+        <result property="count" column="count" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        goods_id,goods_name,storage_id,
+        goods_type_id,count,remark
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from goods g
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

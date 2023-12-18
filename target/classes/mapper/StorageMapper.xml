@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.store.mapper.StorageMapper">
+
+    <resultMap id="BaseResultMap" type="com.admin.store.pojo.Storage">
+        <id property="storageId" column="storage_id" jdbcType="INTEGER"/>
+        <result property="storageName" column="storage_name" jdbcType="VARCHAR"/>
+        <result property="manager" column="manager" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        storage_id,storage_name,manager,
+        address,remark
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from storage s
+        <where>
+            <if test="storageName != null">and storage_name like concat('%', #{storageName}, '%')
+            </if>
+        </where>
+        order by storage_id desc
+    </select>
+</mapper>

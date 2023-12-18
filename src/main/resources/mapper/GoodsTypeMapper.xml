@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.store.mapper.GoodsTypeMapper">
+
+    <resultMap id="BaseResultMap" type="com.admin.store.pojo.GoodsType">
+        <id property="goodsTypeId" column="goods_type_id" jdbcType="INTEGER"/>
+        <result property="goodsTypeName" column="goods_type_name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        goods_type_id,goods_type_name,remark
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from goods_type gt
+        <where>
+            <if test="goodsTypeName != null">and goods_type_name like concat('%', #{goodsTypeName}, '%')
+            </if>
+        </where>
+        order by goods_type_id desc
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/storedb?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: root
+    password: Aa123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    #    cluster:
+    #      nodes: 192.168.10.10:6379,192.168.10.10:6380,192.168.10.10:6381
+    #    host: 192.168.131.128
+    #    port: 6379
+    #    password:
+    #    database: 0
+#    sentinel:
+#      nodes: 192.168.131.128:26379
+#      master: mymaster
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    # 开发阶段方便调试：控制台输出SQL语句：系统正式发布时建议关闭
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.admin.store.pojo
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
+  #设置映射xml文件
+  mapper-locations: classpath:mapper/*.xml

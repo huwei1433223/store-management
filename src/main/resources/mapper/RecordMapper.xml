@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.store.mapper.RecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.admin.store.pojo.Record">
+        <id property="recordId" column="record_id" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="count" column="count" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        record_id,goods_id,user_id,
+        count,create_time,remark
+    </sql>
+
+    <select id="queryList" resultType="java.util.HashMap">
+        select record.*,goods.goods_name,storage.storage_name,goods_type.goods_type_name,
+        (select user.name from user where user.user_id=record.user_id) operator
+        from record,goods,storage,goods_type
+        <where>
+            goods.goods_id=record.goods_id
+            and goods.storage_id=storage.storage_id
+            and goods.goods_type_id=goods_type.goods_type_id
+            <if test="goodsName != null and goodsName!=''">and goods.goods_name like concat('%', #{goodsName}, '%')
+            </if>
+            <if test="storageId != null  and storageId!=''">and goods.storage_id=#{storageId}
+            </if>
+            <if test="goodsTypeId != null  and goodsTypeId!=''">and goods.goods_type_id=#{goodsTypeId}
+            </if>
+            <if test="userId != null  and userId!=''">and record.user_id=#{userId}
+            </if>
+        </where>
+
+    </select>
+</mapper>
